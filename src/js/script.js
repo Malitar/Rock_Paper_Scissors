@@ -1,6 +1,14 @@
 /* ***********************
 * COMPUTER Functions 
 ************************ */
+
+/**
+ * Function to calculate a random int for the computer
+ * 
+ * @param {int} x 
+ * 
+ * returns string
+ */
 let getComputer = (x = Math.floor(Math.random()*3)) => {
      if(x === 0){
           return `rock`;
@@ -11,6 +19,9 @@ let getComputer = (x = Math.floor(Math.random()*3)) => {
      }
 };
 
+/**
+ * function to return the computerValue
+ */
 function computerPlay() {
      computerValue = getComputer();
      return computerValue;
@@ -21,6 +32,9 @@ function computerPlay() {
 /* ***********************
 * USER Functions 
 ************************ */
+/**
+ * function to get the input from user
+ */
 function getUserinput(){
      let userIn;
      let correctInput = false;
@@ -40,6 +54,13 @@ function getUserinput(){
      return userIn;
 }
 
+/**
+ * function to correct user input toLowerCase
+ * 
+ * @param {string} userString 
+ * 
+ * returns string
+ */
 function correctUserInput(userString) {
      return userString.toLowerCase();
 }
@@ -50,6 +71,15 @@ function correctUserInput(userString) {
 * GAME Functions 
 ************************ */
 
+/**
+ * 
+ * function to interpret winner of round
+ * 
+ * @param {string} player 
+ * @param {string} computer 
+ * 
+ * returns int
+ */
 function playRound(player, computer) {
      let statement;
      switch(player) {
@@ -87,6 +117,9 @@ function playRound(player, computer) {
      return statement;
 }
 
+/**
+ * Game logic for playing 5 rounds
+ */
 function game() {
      let comWinStreak = 0;
      let userWinStreak = 0;
