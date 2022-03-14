@@ -39,13 +39,14 @@ function getUserinput(){
      let userIn;
      let correctInput = false;
      do {
-          let userInput = prompt(`Input rock, paper or scissor.`);
+          let userInput = prompt(`Input rock, paper or scissor.`, ``);
           if(userInput !== null){
               userInput = correctUserInput(userInput); 
                if(userInput === `rock` || userInput === `paper` || userInput === `scissor`){
                     correctInput = true;
                     userIn = userInput;
                }
+               //if user pushes "cancel-Button"
           }else {
                alert(`Thanks for Playing`);
                correctInput = true;
@@ -128,6 +129,8 @@ function game() {
           let playerSelection = getUserinput();
 
           let playStatement = playRound(playerSelection, computerSelection);
+
+          //Detect winner & print it
           switch(playStatement){
                case 0:
                     console.log(`Both have the same hand: ${playerSelection}`);
