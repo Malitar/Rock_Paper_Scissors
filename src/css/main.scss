@@ -1,0 +1,14 @@
+$pastell-5: #FFB286B9;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    background-color: $pastell-5;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 5px;
+}
