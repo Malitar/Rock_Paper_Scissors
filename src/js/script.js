@@ -1,6 +1,6 @@
 /* ***********************
-* COMPUTER Functions 
-************************ */
+ * COMPUTER FUNCTIONS 
+ ************************ */
 
 /**
  * Function to calculate a random int for the computer
@@ -9,10 +9,10 @@
  * 
  * returns string
  */
-let getComputer = (x = Math.floor(Math.random()*3)) => {
-     if(x === 0){
+let getComputer = (x = Math.floor(Math.random() * 3)) => {
+     if (x === 0) {
           return `rock`;
-     } else if(x === 1){ 
+     } else if (x === 1) {
           return `paper`;
      } else {
           return `scissor`;
@@ -20,58 +20,18 @@ let getComputer = (x = Math.floor(Math.random()*3)) => {
 };
 
 /**
- * function to return the computerValue
+ * Helper function to return the computerValue
+ * 
+ * returns int
  */
 function computerPlay() {
      computerValue = getComputer();
      return computerValue;
 }
 
-
-
 /* ***********************
-* USER Functions 
-************************ */
-/**
- * function to get the input from user
- */
-function getUserinput(){
-     let userIn;
-     let correctInput = false;
-     do {
-          let userInput = prompt(`Input rock, paper or scissor.`, ``);
-          if(userInput !== null){
-              userInput = correctUserInput(userInput); 
-               if(userInput === `rock` || userInput === `paper` || userInput === `scissor`){
-                    correctInput = true;
-                    userIn = userInput;
-               }
-               //if user pushes "cancel-Button"
-          }else {
-               alert(`Thanks for Playing`);
-               correctInput = true;
-          }
-     } while (correctInput !== true);
-     return userIn;
-}
-
-/**
- * function to correct user input toLowerCase
- * 
- * @param {string} userString 
- * 
- * returns string
- */
-function correctUserInput(userString) {
-     return userString.toLowerCase();
-}
-
-
-
-/* ***********************
-* GAME Functions 
-************************ */
-
+ * GAME FUNCTIONS 
+ ************************ */
 /**
  * 
  * function to interpret winner of round
@@ -83,29 +43,29 @@ function correctUserInput(userString) {
  */
 function playRound(player, computer) {
      let statement;
-     switch(player) {
+     switch (player) {
           case 'rock':
-               if(computer === `rock`) {
+               if (computer === `rock`) {
                     statement = 0;
-               }else if(computer === `paper`) {
+               } else if (computer === `paper`) {
                     statement = 1;
                } else {
                     statement = -1;
                }
                break;
           case 'paper':
-               if(computer === `rock`) {
+               if (computer === `rock`) {
                     statement = 1;
-               }else if(computer === `paper`) {
+               } else if (computer === `paper`) {
                     statement = 0;
                } else {
                     statement = -1;
                }
                break;
           case `scissor`:
-               if(computer === `rock`) {
+               if (computer === `rock`) {
                     statement = -1;
-               }else if(computer === `paper`) {
+               } else if (computer === `paper`) {
                     statement = 1;
                } else {
                     statement = 0;
@@ -119,48 +79,59 @@ function playRound(player, computer) {
 }
 
 /**
- * Game logic for playing 5 rounds
+ * Helper Function to call playRound()
+ * Gets called by button click event
+ * 
+ * @param {buttonEvent} user 
  */
-function game() {
-     let comWinStreak = 0;
-     let userWinStreak = 0;
-     for(let i = 0; i < 5; i++){
-          let computerSelection = computerPlay();
-          let playerSelection = getUserinput();
-
-          let playStatement = playRound(playerSelection, computerSelection);
-
-          //Detect winner & print it
-          switch(playStatement){
-               case 0:
-                    console.log(`Both have the same hand: ${playerSelection}`);
-                    break;
-               case -1:
-                    console.log(`You lost: ${computerSelection} beats ${playerSelection}`);
-                    comWinStreak++;
-                    break;
-               case 1:
-                    console.log(`You won: ${playerSelection} beats ${computerSelection}`);
-                    userWinStreak++;
-                    break;
-               default:
-                    console.error(`Something went wrong`);
-          }
+function playGame(user) {
+     let userInput = user.target.value.toString();
+     let computerInput = computerPlay().toString();
+     let gameResult = playRound(userInput, computerInput);
+     if (gameResult == 1) {
+          userScore++;
+     } else if (gameResult == -1) {
+          computerScore++;
      }
-     if(comWinStreak > userWinStreak) {
-          alert(`Computer has won`);
-     }else {
-          alert(`User has won`);
+     drawScore(userScore, computerScore);
+}
+
+/* ***************************
+ * DISPLAY FUNCTIONS
+ *************************** */
+
+/**
+ * Function to draw the result on the screen
+ *  
+ * @param {int} userScore 
+ * @param {int} computerScore 
+ */
+function drawScore(userScore, computerScore) {
+     const result = document.querySelector('.results');
+     const drawCanvas = document.createElement(`div`);
+     //Check if someone has one else keep playing
+     if (userScore === 5) {
+          alert('User has won');
+     } else if (computerScore === 5) {
+          alert('Computer has won');
+     } else {
+          drawCanvas.textContent = `User Score: ${userScore} Computer Score: ${computerScore}`;
+          if(result.hasChildNodes()){
+               let elem = result.firstElementChild;
+               elem.remove();
+          }
+          result.appendChild(drawCanvas);
      }
 }
 
-
+//Variables
+const btnList = document.querySelectorAll('button');
+let userScore = 0;
+let computerScore = 0;
 
 /* ***********************
-*
-* GAME  START 
-*
-************************ */
-game();
+ * GAME  START 
+ ************************ */
+btnList.forEach(btnItem => btnItem.addEventListener('click', playGame));
 
-
+//@To-Do Function to reset all
